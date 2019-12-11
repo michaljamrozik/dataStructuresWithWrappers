@@ -1,14 +1,11 @@
 package stack;
 
-import dataStructuresWithWrapper.Person;
-
-public class CustomStack {
+public class CustomStack<T> {
     private int size;
-    private Node last;
+    private Node <T> last;
 
-    public void add(Person person) {
-        Node node = new Node();
-        node.setPerson(person);
+    public void add(T item) {
+        Node node = new Node(item);
         if (size == 0) {
             last = node;
             node.setPrevious(null);
@@ -40,13 +37,13 @@ public class CustomStack {
         }
     }
 
-    public boolean contains(Person person) {
+    public boolean contains(T item) {
         if (size == 0) {
             return false;
         } else {
             Node temp = last;
             while (temp != null) {
-                if (temp.getPerson() == person) {
+                if (temp.getItem() == item) {
                     return true;
                 }
                 temp = temp.getPrevious();
@@ -55,17 +52,17 @@ public class CustomStack {
         return false;
     }
 
-    public Person getPeek() {
+    public T getPeek() {
         if (size == 0) {
             return null;
         } else if (size == 1) {
-            return last.getPerson();
+            return  last.getItem();
         } else {
-            Node temp = last;
+            Node<T> temp = last;
             while (temp.getPrevious() != null) {
                 temp = temp.getPrevious();
             }
-            return temp.getPerson();
+            return temp.getItem();
         }
     }
 
@@ -90,18 +87,18 @@ public class CustomStack {
         }
     }
 
-    public void remove(Person person) {
-        if (size == 1 && person == last.getPerson()) {
+    public void remove(T item) {
+        if (size == 1 && item == last.getItem()) {
             last = null;
             size--;
-        } else if (last.getPerson() == person) {
+        } else if (last.getItem() == item) {
             last = last.getPrevious();
             size--;
         } else {
             Node temp = last;
             Node tempIndex = last.previous;
             while (tempIndex != null) {
-                if (tempIndex.getPerson() == person) {
+                if (tempIndex.getItem() == item) {
                     temp.setPrevious(tempIndex.getPrevious());
                 }
                 temp = temp.getPrevious();
@@ -112,8 +109,8 @@ public class CustomStack {
 
     }
 
-    public Person getLast() {
-        return last == null ? null : last.person;
+    public T getLast() {
+        return last == null ? null :  last.getItem();
     }
 
     public int getSize() {
@@ -129,34 +126,34 @@ public class CustomStack {
             return "Stack is empty";
         } else {
             while (temp.getPrevious() != null) {
-                result += temp.getPerson() + " --> ";
+                result += temp.getItem() + " --> ";
                 temp = temp.getPrevious();
             }
-            result += temp.getPerson() + "]";
+            result += temp.getItem() + "]";
         }
         return result;
     }
 
     //klasa węwnętrzna
-    private class Node {
+    private class Node<T> {
         private Node previous;
-        private Person person;
+        private T item;
 
 
-        public Node getPrevious() {
+        private Node(T item) {
+            this.item = item;
+        }
+
+        private Node getPrevious() {
             return previous;
         }
 
-        public void setPrevious(Node previous) {
+        private void setPrevious(Node previous) {
             this.previous = previous;
         }
 
-        public Person getPerson() {
-            return person;
-        }
-
-        public void setPerson(Person person) {
-            this.person = person;
+        private T getItem() {
+            return item;
         }
     }
 }

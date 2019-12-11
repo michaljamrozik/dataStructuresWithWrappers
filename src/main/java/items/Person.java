@@ -1,4 +1,4 @@
-package dataStructuresWithWrapper;
+package items;
 
 
 public class Person {
@@ -9,14 +9,6 @@ public class Person {
     public Person(String name, String surname) {
         this.name = name;
         this.surname = surname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
     }
 
     @Override

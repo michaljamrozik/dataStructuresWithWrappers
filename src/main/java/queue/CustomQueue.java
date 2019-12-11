@@ -1,22 +1,17 @@
 package queue;
 
-
-import dataStructuresWithWrapper.Person;
-
-public class CustomQueue {
+public class CustomQueue<T> {
 
     private int size;
-    private Node last;
+    private Node<T> last;
 
-    //złożoność O(1)
-    public void add(Person person) {
-        Node node = new Node(person);
+    public void add(T item) {
+        Node node = new Node(item);
         node.setPrevious(last);
         last = node;
         size++;
     }
 
-    //złożoność O(n)
     public void delete() {
         if (size == 0) {
             System.out.println("Operation is impossible, queue is empty");
@@ -24,7 +19,7 @@ public class CustomQueue {
             last = null;
             size--;
         } else {
-            Node temp = last;
+            Node<T> temp = last;
             while (temp.getPrevious().getPrevious() != null) {
                 temp = temp.getPrevious();
             }
@@ -33,10 +28,10 @@ public class CustomQueue {
         }
     }
 
-    public boolean contains(Person person) {
-        Node temp = last;
+    public boolean contains(T item) {
+        Node <T> temp = last;
         while (temp != null) {
-            if (temp.person == person) {
+            if (temp.getItem() == item) {
                 return true;
             }
             temp = temp.getPrevious();
@@ -44,8 +39,8 @@ public class CustomQueue {
         return false;
     }
 
-    public Person getLast() {
-        return last == null ? null : last.person;
+    public T getLast() {
+        return last == null ? null : last.getItem();
     }
 
     public int getSize() {
@@ -56,15 +51,15 @@ public class CustomQueue {
     @Override
     public String toString() {
         String result = "Queue[";
-        Node temp = last;
+        Node <T> temp = last;
         if (size == 0) {
             return "Queue is empty";
         } else {
             while (temp.getPrevious() != null) {
-                result += temp.getPerson() + " --> ";
+                result += temp.getItem() + " --> ";
                 temp = temp.getPrevious();
             }
-            result += temp.getPerson();
+            result += temp.getItem();
         }
         return result + "]";
 
@@ -72,29 +67,26 @@ public class CustomQueue {
     }
 
     //klasa węwnętrzna
-    private class Node {
+    private class Node<T> {
         private Node previous;
-        private Person person;
+        private T item;
 
 
-        public Node(Person person) {
-            this.person = person;
+        private Node(T item) {
+            this.item = item;
         }
 
-        public Node getPrevious() {
+        private Node getPrevious() {
             return previous;
         }
 
-        public void setPrevious(Node previous) {
+        private void setPrevious(Node previous) {
             this.previous = previous;
         }
 
-        public Person getPerson() {
-            return person;
-        }
-
-        public void setPerson(Person person) {
-            this.person = person;
+        private T getItem() {
+            return item;
         }
     }
 }
+

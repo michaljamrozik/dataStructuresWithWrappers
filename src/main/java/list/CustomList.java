@@ -1,15 +1,15 @@
 package list;
 
 
-import dataStructuresWithWrapper.Person;
+import items.Person;
 
-public class CustomList {
+public class CustomList<T> {
 
     private int size;
-    private Node last;
+    private Node<T> last;
 
-    public void setLast(Person last) {
-        this.last.setPerson(last);
+    public void setLast(T last) {
+        this.last.setItem(last);
     }
 
     public int getSize() {
@@ -17,19 +17,19 @@ public class CustomList {
         return size;
     }
 
-    public Person getLast() {
-        return last.getPerson();
+    public T getLast() {
+        return  last.getItem();
     }
 
-    public void add(Person person) {
-        Node node = new Node(person);
+    public void add(T item) {
+        Node node = new Node(item);
         node.setPrevious(last);
         last = node;
         size++;
     }
 
-    public void add(Person person, int index) {
-        Node node = new Node(person);
+    public void add(T item, int index) {
+        Node node = new Node(item);
         if (index <= 0) {
             System.out.println("Index must be equal to 1 at least");
         } else if (index > size + 1) {
@@ -72,13 +72,13 @@ public class CustomList {
 
     }
 
-    public void set(int indexToReplace, Person newPerson) {
+    public void set(int indexToReplace, T item) {
         if (indexToReplace <= 0) {
             System.out.println("Index must be equal to 1 at least");
         } else if (indexToReplace > size) {
             System.out.println("Index cannot be higher than list's size");
         } else if (indexToReplace == size) {
-            last.setPerson(newPerson);
+            last.setItem(item);
         } else {
             Node temp = last;
             int tempIndex = size - 1;
@@ -86,28 +86,28 @@ public class CustomList {
                 temp = temp.getPrevious();
                 tempIndex--;
             }
-            temp.getPrevious().setPerson(newPerson);
+            temp.getPrevious().setItem(item);
         }
 
     }
 
-    public void set(Person personToReplace, Person newPerson) {
+    public void set(T itemToReplace, T newItem) {
 
-        if (personToReplace == last.person) {
-            last.setPerson(newPerson);
+        if (itemToReplace == last.item) {
+            last.setItem(newItem);
         }else {
             Node temp = last;
-            while (temp.getPrevious().getPerson() != personToReplace) {
+            while (temp.getPrevious().getItem() != itemToReplace) {
                 temp = temp.getPrevious();
             }
-           temp.getPrevious().setPerson(newPerson);
+           temp.getPrevious().setItem(newItem);
         }
     }
 
     public boolean contains(Person person) {
         Node temp = last;
         while (temp != null) {
-            if (temp.getPerson() == person) {
+            if (temp.getItem() == person) {
                 return true;
             }
             temp = temp.getPrevious();
@@ -124,38 +124,38 @@ public class CustomList {
             return "List is empty";
         } else {
             while (temp.getPrevious() != null) {
-                result += temp.getPerson() + " --> ";
+                result += temp.getItem() + " --> ";
                 temp = temp.getPrevious();
             }
-            result += temp.getPerson() + "]";
+            result += temp.getItem() + "]";
         }
         return result;
     }
 
     //klasa węwnętrzna
-    private class Node {
+    private class Node<T> {
         private Node previous;
-        private Person person;
+        private T item;
 
 
-        public Node(Person person) {
-            this.person = person;
+        private Node(T item) {
+            this.item = item;
         }
 
-        public Node getPrevious() {
+        private Node getPrevious() {
             return previous;
         }
 
-        public void setPrevious(Node previous) {
+        private void setPrevious(Node previous) {
             this.previous = previous;
         }
 
-        public Person getPerson() {
-            return person;
+        private T getItem() {
+            return item;
         }
 
-        public void setPerson(Person person) {
-            this.person = person;
+        public void setItem(T item) {
+            this.item = item;
         }
     }
 }
